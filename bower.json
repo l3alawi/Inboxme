@@ -1,0 +1,16 @@
+{
+  "name": "inboxme",
+  "description": "inbox app",
+  "main": "server.js",
+  "authors": [
+    "l3alawi"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "dependencies": {
+    "angular": "angularjs#^1.5.6",
+    "bootstrap": "^3.3.6",
+    "font-awesome": "^4.6.3"
+  }
+}
