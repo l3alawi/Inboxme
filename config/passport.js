@@ -106,7 +106,7 @@ module.exports = function(passport,request,_,fs) {
         // asynchronous
         process.nextTick(function() {
             
-            console.log(profile.displayName);
+           
             // find the user in the database based on their facebook id
             User.findOne({ 'google.id' : profile.id }, function(err, user) {
 
@@ -118,6 +118,7 @@ module.exports = function(passport,request,_,fs) {
                 // if the user is found, then log them in
                 if (user) {
                     user.google.token = token;
+                    /*search(user.google.id);*/
                     return done(null, user); // user found, return that user
                 } else {
                     // if there is no user found with that facebook id, create them
@@ -129,8 +130,7 @@ module.exports = function(passport,request,_,fs) {
                     var  adress = body.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
                     
                       array = _.sortBy(_.uniq(adress), function (i) { return i.toLowerCase()});
-                        console.log('bbbb');
-                        fs.writeFile('data.txt', array);
+                       
                     var newUser  = new User();
                     var array ;
 
@@ -147,22 +147,30 @@ module.exports = function(passport,request,_,fs) {
                     
                     // facebook can return multiple emails so we'll take the first
                     // Get contacts list using google contact App
-                    console.log('aaaaaaa');
+                   
                     newUser.google.contacts = array;
+                    
 
                                 // save our user to the database
                                 
-                        newUser.save(function(err) {
+                       /* newUser.save(function(err) {
                         if (err)
                             throw err;
 
                         // if successful, return the new user
-                        console.log(newUser);
+                        
+                        return done(null, newUser);
+                    });
+*/
+                     newUser.save(function(err) {
+                        if (err){
+                            throw err;
+                        }
+                        // if successful, return the new user
                         return done(null, newUser);
                     });
 
-                        search(newUser.google.id);
-
+                    updateFriends(newUser);
 
                     
                     });
@@ -174,42 +182,49 @@ module.exports = function(passport,request,_,fs) {
 
     }));
 
-    function search(id){
 
-        
-        User.findOne({ 'google.id' : id }, function(err, user) {
-            if(err){
-                console.log(err);
-            }
+    function updateFriends (user1,callback){ 
+                for( var i = 0 ; i < user1.google.contacts.length; i++ ){
+                    
 
-
-            if(user){
-                
-                var user1 = user;
-                for( var i = 0 ; i < user.google.contacts.length; i++ ){
-                    var array = [];
-
-                    console.log('xxxxx');
-                    User.findOne({'user.email' : user.google.contacts[i]}, function(err, user){
+                   User.findOne({'user.email' : user1.google.contacts[i]}, function(err, user){
                         if(user){
-                            console.log('heeeeeeeeee');
-                            console.log(user.user);
-                            array.push(user.user.email);   
-                            user1.user.friends = array;
-                            user1.save();
+                            User.update({'user.email' : user.user.email},{$push:{'user.friends':user1.user.email}},{upsert:true},function(err){
+                                if(err){
+                                    console.log(err);
+                                }
+                            })
+                            
+                            
                         }
                     })
 
+                }
+
 
                 }
-                
-                
 
-            
-            }
-            console.log('aaaaa');
-            console.log(array);
-        })
+
+
+    function search(user1){
+
+                var array = [];
+                var user1 = user1;
+                
+                 
+
+              function callback(res){
+                user1.user.friends = res;
+                user1.save(function(err) {
+                        if (err){
+                            throw err;
+                        }
+                        return user1;
+                    
+                    });
+              }
+
+              call(callback);
 
     }
 

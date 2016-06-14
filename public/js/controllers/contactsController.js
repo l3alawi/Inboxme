@@ -4,6 +4,26 @@
 var myApp = angular.module('myApp',['ngMaterial','ngMessages','ngTagsInput']);
 
 
+
+
+myApp.controller('WidthDemoCtrl',function ($mdDialog,$scope) {
+
+  var vm = this;
+
+  
+
+  /*this.announceClick = function(index) {
+    $mdDialog.show(
+      $mdDialog.alert()
+        .title('You clicked!')
+        .textContent('You clicked the menu item at index ' + index)
+        .ok('Nice')
+    );
+  };*/
+})
+
+
+
 myApp.controller('contactsController', function ($http) {
 
 
@@ -19,20 +39,104 @@ myApp.controller('contactsController', function ($http) {
 
 })
 
-myApp.controller('MainCtrl', function($scope, $http) {
-  $scope.tags = [];
-  
-  $scope.loadCountries = function($query) {
-  	
-  	 
-  	
-  	console.log('aaaa');
-    return data = $http({url:'/profile', method:'GET',params: {searsh: $query}}).success(function(response) {
-    	});
+myApp.controller('MainCtrl', function($scope,$mdDialog, $http) {
 
-   
-  };
+	$scope.desti = 'All friends';
+  console.log($scope.destina);
+
+  $scope.aficher = function(index){
+
+  	
+
+
+  	if(index == '0'){
+  		$scope.desti = 'All friends';
+  		  $scope.loadCountries = function($query) {
+		    return data = $http({url:'/profile', method:'GET',params: {searsh: $query}}).success(function(response) {
+		    	});
+		  };
+  	}
+  	if(index == '1'){
+  		$scope.desti = 'Friends in the app';
+  		$scope.loadCountries = function($query) {
+		    return data = $http({url:'/friendsApp', method:'GET',params: {searsh: $query}}).success(function(response) {
+		    	});
+		  };
+
+  	}
+  	if(index == '2'){
+  		$scope.desti = 'Friends online';
+  	}
+
+  }
+
+
+
+
+
+			$scope.sendMessage = function(){
+
+				console.log($scope.message);
+
+				if($scope.message == "undefined"){
+					$mdDialog.show(
+			      $mdDialog.alert()
+			        .title('You clicked!')
+			        .textContent('You clicked the menu item at index ')
+			        .ok('Nice')
+			    );
+							}
+
+				var data = {
+								to: [String],
+								message:String
+							}
+				console.log($scope.tags);
+
+				$http({
+				    url: "/send",
+				    method: "POST",
+				    data: data
+				}).success(function(response) {
+
+				 console.log('yes');
+				
+				}).error(function(response) {
+				    console.log(response);
+				});
+			
+		}
+
+
+				
+  
+
 });
+
+
+
+
+myApp.controller('WidthDemoCtrl', DemoCtrl);
+
+function DemoCtrl($mdDialog) {
+  var vm = this;
+
+  this.announceClick = function(index) {
+    $mdDialog.show(
+      $mdDialog.alert()
+        .title('You clicked!')
+        .textContent('You clicked the menu item at index ' + index)
+        .ok('Nice')
+    );
+  };
+}
+
+
+
+/**
+Copyright 2016 Google Inc. All Rights Reserved. 
+Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
+**/
 
 /*
 

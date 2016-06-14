@@ -3,6 +3,29 @@
 <div class="row" ng-controller='MainCtrl'>
 <div class="col-md-8 col-md-offset-1">
 
+
+<div class="md-menu-demo menudemoMenuWidth"  ng-cloak="" ng-app="MyApp">
+  
+   
+    <div class="menus" layout-wrap="" layout="row" layout-fill="" layout-align="space-between center" style="min-height:100px;">
+      
+        <md-menu md-offset="0 -6">
+          <md-button aria-label="Open demo menu"  ng-click="$mdOpenMenu($event)">
+            <label>Send message to : {{desti}}</label>
+          </md-button>
+          <md-menu-content width="6">
+            <md-menu-item ng-repeat="item in ['All friends', 'Friends in the app', 'Friends online']">
+              <md-button ng-click='aficher($index)' ng-model='destina'>{{item}} </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+      
+
+    </div>
+  
+</div>
+
+
 <tags-input ng-model="tags" display-property="text" placeholder="Add an adresse" replace-spaces-with-dashes="false">
       <auto-complete source="loadCountries($query)"
                      min-length="0"
@@ -13,12 +36,12 @@
 </tags-input>
     
 </div>
-</div> 
+
 <div class="row">
 <div class="col-md-8 col-md-offset-1">
    <div class="form-group">
     <label for='message'>Your message</label>
-    <textarea class="form-control" rows='10' id="message"></textarea>
+    <textarea ng-model='message' class="form-control" rows='10' id="message"></textarea>
    </div>
 </div>
 
@@ -26,5 +49,7 @@
 
 <div class="row">
 <div class="col-xs-4 col-xs-offset-4"></div>
-  <a href="#" class="btn btn-danger  btn-lg"><span class="fa fa-paper-plane-o"></span> Send</a>
+  <a href="#" ng-click='sendMessage()' class="btn btn-danger  btn-lg"><span class="fa fa-paper-plane-o"></span> Send</a>
 </div>
+
+</div> 

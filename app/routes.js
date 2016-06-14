@@ -29,11 +29,26 @@ module.exports = function(app, passport,request,google,GoogleContacts,_) {
     		return elm.text.indexOf(searsh) != -1 ;
     });
 
-            console.log(data2);
    			res.json(data2);
             
         });
     });
+
+    app.get('/friendsApp',isloggedIn,function(req, res){
+
+		User.findById(req.user, function(err, user) {
+			searsh = req.query.searsh;
+       		console.log(searsh);
+            var tags = createTags(user.user.friends);
+            var data2 = tags.filter(function(elm){
+    		return elm.text.indexOf(searsh) != -1 ;
+    });
+
+   			res.json(data2);
+            
+        });
+    });
+
 
      app.get('/home', isloggedIn, function(req, res) {
 
@@ -51,6 +66,11 @@ module.exports = function(app, passport,request,google,GoogleContacts,_) {
 
 		 
 		});
+
+     app.post('/send',isloggedIn, function(req, res){
+     	console.log("ttttt");
+     	console.log(req.body);
+     })
         
 
    

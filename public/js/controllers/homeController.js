@@ -8,7 +8,8 @@ myApp.controller('AppCtrl',function($scope,$http){
 				}).success(function(response) {
 
 				 $scope.name = response.google.name;
-				 $scope.friends = response.google.contacts.length
+				 $scope.friends = response.google.contacts.length;
+				 $scope.friendsApp = response.user.friends.length;
 
 
 				
@@ -17,6 +18,8 @@ myApp.controller('AppCtrl',function($scope,$http){
 				    console.log(response);
 				});
 			
+
+	
 		
 
 });
