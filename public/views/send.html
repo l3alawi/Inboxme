@@ -1,0 +1,30 @@
+
+
+<div class="row" ng-controller='MainCtrl'>
+<div class="col-md-8 col-md-offset-1">
+
+<tags-input ng-model="tags" display-property="text" placeholder="Add an adresse" replace-spaces-with-dashes="false">
+      <auto-complete source="loadCountries($query)"
+                     min-length="0"
+                     load-on-focus="true"
+                     load-on-empty="true"
+                     max-results-to-show="32"
+                     ></auto-complete>
+</tags-input>
+    
+</div>
+</div> 
+<div class="row">
+<div class="col-md-8 col-md-offset-1">
+   <div class="form-group">
+    <label for='message'>Your message</label>
+    <textarea class="form-control" rows='10' id="message"></textarea>
+   </div>
+</div>
+
+</div>
+
+<div class="row">
+<div class="col-xs-4 col-xs-offset-4"></div>
+  <a href="#" class="btn btn-danger  btn-lg"><span class="fa fa-paper-plane-o"></span> Send</a>
+</div>

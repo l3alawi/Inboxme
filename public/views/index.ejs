@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html ng-app='myApp'>
+<head>
+	<title> Inbox me</title>
+	<link rel="stylesheet" type="text/css" href="libs/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="libs/angular-material/angular-material.min.css">
+	<link rel="stylesheet" href="css/ng-tags-input.min.css">   
+</head>
+<body>
+
+
+<div ></div>
+
+
+<div class="col-md-9 col-md-offset-1">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Inboxme</a>
+    </div>
+  </div>
+</nav>
+
+
+<div ng-cloak="" class="tabsdemoDynamicHeight">
+  <md-content>
+    <md-tabs md-dynamic-height="" md-border-bottom="">
+      <md-tab label="Profile">
+        <md-content class="md-padding" ng-include="'views/profile.html'">
+          
+        </md-content>
+      </md-tab>
+      <md-tab label="Send message">
+        <md-content class="md-padding" ng-include="'views/send.html'" >
+
+ 
+    
+
+        </md-content>
+      </md-tab>
+      <md-tab label="Inbox">
+        <md-content class="md-padding" ng-include="'views/inbox.html'" >
+          
+        </md-content>
+      </md-tab>
+    </md-tabs>
+  </md-content>
+</div>
+
+</div>
+<!--
+Copyright 2016 Google Inc. All Rights Reserved. 
+Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
+-->
+
+
+
+
+
+</body>
+<script type="text/javascript" src="libs/angular/angular.min.js"></script>
+<script type="text/javascript" src="js/angucomplete.js"></script>
+<script type="text/javascript" src="libs/angular-aria/angular-aria.min.js"></script>
+<script type="text/javascript" src="libs/angular-animate/angular-animate.min.js"></script>
+<script type="text/javascript" src="libs/angular-material/angular-material.min.js"></script>
+<script type="text/javascript" src="libs/angular-messages/angular-messages.min.js"></script>
+<script type="text/javascript" src="js/ng-tags-input.min.js"></script>
+<script type="text/javascript" src="js/controllers/contactsController.js"></script>
+<script type="text/javascript" src="js/controllers/homeController.js"></script>
+
+
+</body>
+</html>

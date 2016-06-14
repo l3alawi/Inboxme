@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html ng-app='myApp'>
+<head>
+	<title> Inbox me</title>
+	<link rel="stylesheet" type="text/css" href="libs/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="libs/angular-material/angular-material.min.css">
+	<link rel="stylesheet" href="css/ng-tags-input.min.css">   
+</head>
+<body>
+<div class="container" ng-controller='MainCtrl'>
+
+
+
+
+
+<!-- 	<h1>liste des contacts</h1>
+
+<div id='table' class="col-md-2">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>contacts</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat='contact in contacts'>
+				<a href="#"><td>{{contact}}</td></a>
+			</tr>
+		</tbody>
+	</table>
+</div> -->
+
+
+
+<div class="row">
+<div class="col-md-8 col-md-offset-1">
+
+<tags-input ng-model="tags" display-property="text" placeholder="Add an adresse" replace-spaces-with-dashes="false">
+      <auto-complete source="loadCountries($query)"
+                     min-length="0"
+                     load-on-focus="true"
+                     load-on-empty="true"
+                     max-results-to-show="32"
+                     ></auto-complete>
+</tags-input>
+    
+</div>
+</div> 
+<div class="row">
+<div class="col-md-8 col-md-offset-1">
+	 <div class="form-group">
+	 	<label for='message'>Your message</label>
+	 	<textarea class="form-control" rows='10' id="message"></textarea>
+	 </div>
+</div>
+
+</div>
+
+
+
+
+
+<script type="text/javascript" src="libs/angular/angular.min.js"></script>
+<script type="text/javascript" src="js/angucomplete.js"></script>
+<script type="text/javascript" src="libs/angular-aria/angular-aria.min.js"></script>
+<script type="text/javascript" src="libs/angular-animate/angular-animate.min.js"></script>
+<script type="text/javascript" src="libs/angular-material/angular-material.min.js"></script>
+<script type="text/javascript" src="libs/angular-messages/angular-messages.min.js"></script>
+<script type="text/javascript" src="js/ng-tags-input.min.js"></script>
+<script type="text/javascript" src="js/controllers/contactsController.js"></script>
+</body>
+</html>

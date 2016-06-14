@@ -10,12 +10,19 @@ var passport = require('passport');
 var flash = require('connect-flash');
 var path = require('path');
 var request = require("request");
+var _= require('underscore');
+fs = require('fs');
 
+
+
+var google = require('googleapis');
+
+var GoogleContacts = require('google-contacts').GoogleContacts;
 
 
 var configDB = require('./config/database.js');
 mongoose.connect(configDB.url);
-require('./config/passport.js')(passport);
+require('./config/passport.js')(passport,request,_,fs);
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -36,7 +43,7 @@ app.use(express.static(path.resolve(__dirname, 'public')));
 
 
 
-require('./app/routes.js')(app, passport,request);
+require('./app/routes.js')(app, passport,request,google,GoogleContacts,_);
 
 
 app.listen(3000, function(req, res){

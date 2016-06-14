@@ -13,7 +13,7 @@ var User       = require('../app/models/user');
 
 var configAuth = require('./auth.js');
 
-module.exports = function(passport) {
+module.exports = function(passport,request,_,fs) {
 
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
@@ -23,7 +23,7 @@ module.exports = function(passport) {
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
         User.findById(id, function(err, user) {
-            done(err, user);
+            done(err, user.id);
         });
     });
     
@@ -47,7 +47,7 @@ module.exports = function(passport) {
 
         // asynchronous
         process.nextTick(function() {
-            console.log(profile);
+            
 
             // find the user in the database based on their facebook id
             User.findOne({ 'facebook.id' : profile.id }, function(err, user) {
@@ -105,10 +105,11 @@ module.exports = function(passport) {
 
         // asynchronous
         process.nextTick(function() {
-            console.log(profile);
-
+            
+            console.log(profile.displayName);
             // find the user in the database based on their facebook id
             User.findOne({ 'google.id' : profile.id }, function(err, user) {
+
 
                 // if there is an error connecting to database
                 if (err)
@@ -116,31 +117,100 @@ module.exports = function(passport) {
 
                 // if the user is found, then log them in
                 if (user) {
+                    user.google.token = token;
                     return done(null, user); // user found, return that user
                 } else {
                     // if there is no user found with that facebook id, create them
-                    var newUser            = new User();
+                    
+
+                    var adress = 'https://www.google.com/m8/feeds/contacts/default/full?alt=json&access_token='+token+'&max-results=700&v=3.0';
+                    request(adress, function(error, response, body) {
+
+                    var  adress = body.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
+                    
+                      array = _.sortBy(_.uniq(adress), function (i) { return i.toLowerCase()});
+                        console.log('bbbb');
+                        fs.writeFile('data.txt', array);
+                    var newUser  = new User();
+                    var array ;
 
 
+
+                    newUser.user.email = profile.emails[0].value;
+                    newUser.user.provider = 'google';
                     // set all of the google information in our user model
                     newUser.google.id    = profile.id; // set the users facebook id                   
-                    newUser.google.token = token; // we will save the token that facebook provides to the user                    
+                    newUser.google.token = token; // we will save the token that facebook provides to the user     
+                    newUser.google.refreshToken = refreshToken;               
                     newUser.google.name  = profile.displayName;// look at the passport user profile to see how names are returned
-                    newUser.google.email = profile.emails[0].value; // facebook can return multiple emails so we'll take the first
+                    newUser.google.email = profile.emails[0].value;
+                    
+                    // facebook can return multiple emails so we'll take the first
+                    // Get contacts list using google contact App
+                    console.log('aaaaaaa');
+                    newUser.google.contacts = array;
 
-                    // save our user to the database
-                    newUser.save(function(err) {
+                                // save our user to the database
+                                
+                        newUser.save(function(err) {
                         if (err)
                             throw err;
 
                         // if successful, return the new user
+                        console.log(newUser);
                         return done(null, newUser);
                     });
+
+                        search(newUser.google.id);
+
+
+                    
+                    });
+                    
                 }
 
             });
         });
 
     }));
+
+    function search(id){
+
+        
+        User.findOne({ 'google.id' : id }, function(err, user) {
+            if(err){
+                console.log(err);
+            }
+
+
+            if(user){
+                
+                var user1 = user;
+                for( var i = 0 ; i < user.google.contacts.length; i++ ){
+                    var array = [];
+
+                    console.log('xxxxx');
+                    User.findOne({'user.email' : user.google.contacts[i]}, function(err, user){
+                        if(user){
+                            console.log('heeeeeeeeee');
+                            console.log(user.user);
+                            array.push(user.user.email);   
+                            user1.user.friends = array;
+                            user1.save();
+                        }
+                    })
+
+
+                }
+                
+                
+
+            
+            }
+            console.log('aaaaa');
+            console.log(array);
+        })
+
+    }
 
 };
