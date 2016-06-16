@@ -3,7 +3,7 @@
 
 var User       = require('../app/models/user');
 
-module.exports = function(app, passport,request,google,GoogleContacts,_,bodyParser,fs) {
+module.exports = function(app, passport,request,google,GoogleContacts,_,bodyParser,io) {
 	
 	//route for home page
 
@@ -183,7 +183,27 @@ module.exports = function(app, passport,request,google,GoogleContacts,_,bodyPars
 			});
 		}
 	})*/
+var users = [];
 
+	io.on('connection', function(socket){
+		var username ='';
+		console.log('A user has connected');
+
+		socket.on('request-users',function(data){
+			console.log(req.user);
+			io.emit('message', {username:l3alawi,messgae:'aaaaa'});
+		})
+
+		socket.on('message1',function(data){
+			console.log(data);
+			io.emit('message', {username:'l3alawi',messgae:'aaaaa'});
+		})
+
+		socket.on('chat message', function(msg){
+    console.log('message: ' + msg);
+  });
+
+	})
 		
 
 

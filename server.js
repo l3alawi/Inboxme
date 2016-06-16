@@ -1,6 +1,10 @@
 var express = require('express');
 var app = express();
 
+var http = require('http').Server(app);
+
+var io = require('socket.io')(http);
+
 
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
@@ -44,13 +48,13 @@ app.use(express.static(path.resolve(__dirname, 'public')));
 
 
 
-require('./app/routes.js')(app, passport,request,google,GoogleContacts,_,bodyParser,fs);
+require('./app/routes.js')(app, passport,request,google,GoogleContacts,_,bodyParser,io);
 
 
 
 
 
 
-app.listen(3000, function(req, res){
+http.listen(3000, function(req, res){
 	console.log("sever is runing");
 })

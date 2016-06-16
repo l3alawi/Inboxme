@@ -101,7 +101,10 @@ tbody {
 
 
 
-
+#message{
+  width: 300px;
+  height: 400px;
+}
 
 .button {
     -moz-appearance: button;

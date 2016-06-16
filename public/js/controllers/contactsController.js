@@ -1,7 +1,7 @@
 
 
 
-var myApp = angular.module('myApp',['ngMaterial','ngMessages','ngTagsInput','textAngular','ngSanitize','ngFileUpload']);
+var myApp = angular.module('myApp',['ngMaterial','ngMessages','btford.socket-io','ngTagsInput','textAngular','ngSanitize','ngFileUpload']);
 
 
 

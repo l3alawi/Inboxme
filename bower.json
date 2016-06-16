@@ -15,6 +15,8 @@
     "animate.css": "^3.5.2",
     "ng-file-upload": "^12.0.4",
     "angular-trix": "^1.0.2",
-    "textAngular": "^1.5.1"
+    "textAngular": "^1.5.1",
+    "socket.io": "^1.4.6",
+    "angular-socket-io": "^0.7.0"
   }
 }
