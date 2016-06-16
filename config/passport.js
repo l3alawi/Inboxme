@@ -13,7 +13,7 @@ var User       = require('../app/models/user');
 
 var configAuth = require('./auth.js');
 
-module.exports = function(passport,request,_,fs) {
+module.exports = function(passport,request,_) {
 
 
     // used to serialize the user for the session

@@ -16,6 +16,7 @@
     "express": "^4.13.4",
     "express-session": "^1.13.0",
     "googleapis": "^8.0.0",
+    "lusca": "^1.4.1",
     "mongoose": "^4.4.20",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
