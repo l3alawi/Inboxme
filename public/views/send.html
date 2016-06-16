@@ -3,6 +3,8 @@
 <div class="row" ng-controller='MainCtrl'>
 <div class="col-md-9 col-md-offset-1">
 
+<div class="col-md-8">
+
 <div class="md-menu-demo menudemoMenuWidth"  ng-cloak="">
   
    
@@ -26,6 +28,8 @@
 
 
 
+
+
 <tags-input ng-model="tags" display-property="text" placeholder="Add an adresse" replace-spaces-with-dashes="false">
       <auto-complete source="loadCountries($query)"
                      min-length="0"
@@ -36,7 +40,7 @@
 </tags-input>
     
 
-
+</div>
 
 
 <div class="col-md-8">
@@ -51,12 +55,19 @@
 <div class="col-md-8">
    <div class="form-group">
     <label for='message'>Your message :</label>
-    <text-angular ta-toolbar="[['h1','h2','h3'],['bold','italics']]"></text-angular>
+    <text-angular ng-model='message' ta-toolbar="[['h1','h2','h3'],['bold','italics']]"></text-angular>
    </div>
 
 
 </div>
 
+<div class="row">
+
+<div class="col-xs-4 col-xs-offset-4">
+    <a href="#" ng-click='sendMessage()' class="btn btn-danger  btn-lg"><span class="fa fa-paper-plane-o"></span> Send</a>
+  </div>
+
+  
 <div class="col-md-8">
 <div ng-app="fileUpload" >
     Drop File:
@@ -70,6 +81,7 @@
     </ul>
   
 </div>
+
 </div>
 
 
@@ -82,9 +94,8 @@
  -->
 
 
-  <div class="col-xs-4 col-xs-offset-9">
-    <a href="#" ng-click='sendMessage()' class="btn btn-danger  btn-lg"><span class="fa fa-paper-plane-o"></span> Send</a>
-  </div>
+  
 
 </div> 
+</div>
 </div>

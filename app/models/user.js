@@ -11,6 +11,7 @@ var userSchema = mongoose.Schema({
 					// all messages
 	messageReceive: [{
 			from: String,
+			state:String,
 			subject:String,
 			message: String,
 			date:String

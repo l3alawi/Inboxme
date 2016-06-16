@@ -59,6 +59,7 @@ module.exports = function(passport,request,_,fs) {
 
                 // if the user is found, then log them in
                 if (user) {
+                    user.facebook.token = token;
                     return done(null, user); // user found, return that user
                 } else {
                     // if there is no user found with that facebook id, create them
@@ -68,7 +69,7 @@ module.exports = function(passport,request,_,fs) {
                     // set all of the facebook information in our user model
                     newUser.facebook.id    = profile.id; // set the users facebook id                   
                     newUser.facebook.token = token; // we will save the token that facebook provides to the user                    
-                    newUser.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName; // look at the passport user profile to see how names are returned
+                    newUser.facebook.name  = profile.displayName; // look at the passport user profile to see how names are returned
                     newUser.facebook.email = profile.email; // facebook can return multiple emails so we'll take the first
 
                     // save our user to the database
@@ -122,12 +123,13 @@ module.exports = function(passport,request,_,fs) {
                     /*search(user.google.id);*/
                     return done(null, user); // user found, return that user
                 } else {
-                    // if there is no user found with that facebook id, create them
+                    // if there is no user found with google id we'll create one
                     
-
+                        //ask google contact API for user contacts
                     var adress = 'https://www.google.com/m8/feeds/contacts/default/full?alt=json&access_token='+token+'&max-results=700&v=3.0';
                     request(adress, function(error, response, body) {
 
+                            // we have to organize the fil received
                     var  adress = body.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
                     
                       array = _.sortBy(_.uniq(adress), function (i) { return i.toLowerCase()});
@@ -187,6 +189,7 @@ module.exports = function(passport,request,_,fs) {
 
     }));
 
+// for user Uppdate
 
     function updateFriends (user1,callback){ 
                 for( var i = 0 ; i < user1.google.contacts.length; i++ ){

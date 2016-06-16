@@ -10,6 +10,10 @@ myApp.controller('chatController',['$scope','Socket', function($scope, Socket){
 			$scope.msg='';
 		}
 
+		Notification.requestPermission(function(permission){
+				var notification = new Notification("Inbox Me",{body:'New Message from l3alawi',dir:'auto'});
+			});
+
 	}
 
 	Socket.emit('request-user',{});
@@ -20,7 +24,7 @@ myApp.controller('chatController',['$scope','Socket', function($scope, Socket){
 	})
 
 	Socket.on('message', function(data){
-		console.log('aaaa');
+		
 		$scope.messages.push(data)
 	})
 

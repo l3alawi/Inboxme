@@ -58,12 +58,26 @@ myApp.controller('message', function($scope, $mdDialog, $mdMedia,$http) {
 
   
   $scope.showAdvanced = function(ev,index) {
-  		
+
+  	   	$scope.name = $scope.messages[index].to;
+      $scope.message = $scope.messages[index].message;
+      $scope.subject = $scope.messages[index].subject;
+
+      $http({
+            url: "/read",
+            method: "POST",
+            headers: {
+          'Content-Type': 'application/json '
+           },
+            data: data
+        }).success(function(data, status, headers, config) {
+            console.log(data);
+        }).error(function(data, status, headers, config) {
+            console.log(status);
+        });
 
   		console.log('rrr');
-  		$scope.name = $scope.messages[index].to;
-  		$scope.message = $scope.messages[index].message;
-  		$scope.subject = $scope.messages[index].subject;
+  		
 
     var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
 
@@ -151,7 +165,7 @@ myApp.controller('inbox', function($scope, $mdDialog, $mdMedia,$http) {
 
     $mdDialog.show({
       controller: DialogController,
-      templateUrl: 'dialog1.tmpl.html',
+      templateUrl: '<b /b> <i /i> <p /p> src="" alt=""',
       scope:$scope.$new(), 
       parent: angular.element(document.body),
       targetEvent: ev,
@@ -307,7 +321,7 @@ $scope.desti = 'Friends in the app';
 
 			$scope.sendMessage = function(){
 
-				console.log($scope.message);
+				
 
 				validateEmail($scope.tags);
 
@@ -323,6 +337,8 @@ $scope.desti = 'Friends in the app';
 				sendMail($scope.message,$scope.subject, $scope.tags);
 
 				$scope.message = '';
+        $scope.subject='';
+        $scope.tags='';
 				
 			
 		}
@@ -430,129 +446,3 @@ function DemoCtrl($mdDialog) {
 
 
 
-/**
-Copyright 2016 Google Inc. All Rights Reserved. 
-Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
-**/
-
-/*
-
-myApp.controller('MainCtrl', function($scope, tags,$http) {
-
-  $scope.tags = [
-    { text: 'Tag1' },
-    { text: 'Tag2' },
-    { text: 'Tag3' }
-  ];
-
-    function call(callback){ $http({
-				    url: "/profile",
-				    method: "GET"
-				}).then(function(response) {
-				
-				 contactss = response.data.google.contacts ;
-				 contacts = contactss;
-				 callback(contacts);
-				 var tags = [
-    { "text": 'Tag1' },
-    { "text": 'Tag2' },
-    { "text": 'Tag3' }
-  ];
-				callback(tags);			 
- // display contacts in the view  
-				
-				});
-				}
-			
-	function callback(par){
-		
-	}
-   
-  $scope.loadTags = function(query) {
-    return tags.load();
-  };
-
-
-
-
-
-
-});
-
-myApp.service('tags', function($q,$http) {
-
-
-
-  
-  this.load = function() {
-
-  
-
-  	 function call(callback){ $http({
-				    url: "/profile",
-				    method: "GET",params: {searsh: $q}
-				}).success(function(response) {
-				console.log(response.data);
-				 contactss = response.google.contacts ;
-				 contacts = contactss;
-				 
-				var tags = createTags(contacts);
-
-				console.log('aaaaa');
-				callback(tags);	
-				 
- // display contacts in the view  
-				
-				});
-
-		}
-
-function callback(req){
-	deferred.resolve(req);
-}
-
-    var deferred = $q.defer();
-    call(callback);
-    return deferred.promise;
-  };
-
-function createTags(array){
- 	var tags =[];
- 	for(var i = 0 ; i< array.length ; i++){
- 		var add = {
- 			text:String
- 		};
- 		add.text = array[i];
- 		tags.push(add);
- 	}
- 	return tags;
- }
-
-
-});*/
-
-
-
-
-
-
-
-
-/*$http({
-				    url: "/profile",
-				    method: "GET"
-				}).success(function(response) {
-
-				 contactss = response.google.contacts ;
-				 contacts = contactss;
-				 $scope.name = 'aaaaa';
-				 console.log(contacts);
-
-				
-				 $scope.contacts = response.google.contacts; // display contacts in the view  
-				
-				}).error(function(response) {
-				    console.log(response);
-				});
-			
-		}*/

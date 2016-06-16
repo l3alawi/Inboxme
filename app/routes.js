@@ -3,7 +3,7 @@
 
 var User       = require('../app/models/user');
 
-module.exports = function(app, passport,request,google,GoogleContacts,_,bodyParser,io) {
+module.exports = function(app, passport,request,google,GoogleContacts,_,bodyParser,io) { // all our depandencies from server.js 
 	
 	//route for home page
 
@@ -12,13 +12,22 @@ module.exports = function(app, passport,request,google,GoogleContacts,_,bodyPars
 		res.render('home.ejs'); //load home page file
 	});
 
-	// route for profile page 
+	// route for inbox page 
 	app.get('/inbox', isloggedIn, function(req, res) {
 
 		res.render('index.ejs');
 
 		 
 		});
+
+	app.post('/read', isloggedIn, function(req, res) {
+
+		console.log(req.body);
+
+		 
+		});
+
+	// route for profile request
 	app.get('/profile',isloggedIn,function(req, res){
 
 		User.findById(req.user, function(err, user) {
@@ -33,6 +42,8 @@ module.exports = function(app, passport,request,google,GoogleContacts,_,bodyPars
             
         });
     });
+
+    // route for sending Friends in th App
 
     app.get('/friendsApp',isloggedIn,function(req, res){
 
@@ -49,6 +60,7 @@ module.exports = function(app, passport,request,google,GoogleContacts,_,bodyPars
         });
     });
 
+    	//route for sending data about USER
 
      app.get('/home', isloggedIn, function(req, res) {
 
@@ -67,6 +79,8 @@ module.exports = function(app, passport,request,google,GoogleContacts,_,bodyPars
 		 
 		});
 
+     //write sent and reveived message in the dataBase 
+
      app.post('/send',isloggedIn, function(req, res){
 
 
@@ -80,7 +94,7 @@ module.exports = function(app, passport,request,google,GoogleContacts,_,bodyPars
 					User.findOne({'user.email' : req.body.to[i]}, function(err, user){
 						console.log(user);
                         if(user){
-                            User.update({'user.email' : user.user.email},{$push:{'messageReceive':{from: user1.user.name, subject: req.body.subject, message: req.body.message,date:req.body.date}}},{upsert:true},function(err){
+                            User.update({'user.email' : user.user.email},{$push:{'messageReceive':{from: user1.user.name,state:'Unread', subject: req.body.subject, message: req.body.message,date:req.body.date}}},{upsert:true},function(err){
                                 if(err){
                                     console.log(err);
                                 }
@@ -123,7 +137,7 @@ module.exports = function(app, passport,request,google,GoogleContacts,_,bodyPars
 	// Facebook will redirect the user back to the application at
 	//     /auth/facebook/callback
 
-	app.get('/auth/facebook', passport.authenticate('facebook', {scope : ['email']}));
+	app.get('/auth/facebook', passport.authenticate('facebook', {scope : ['email',' public_profile']}));
 
 	// Facebook will redirect the user to this URL after approval.  Finish the
 	// authentication process by attempting to obtain an access token.  If
@@ -183,6 +197,8 @@ module.exports = function(app, passport,request,google,GoogleContacts,_,bodyPars
 			});
 		}
 	})*/
+
+// Live chat with Socket.io
 var users = [];
 
 	io.on('connection', function(socket){
@@ -191,12 +207,12 @@ var users = [];
 
 		socket.on('request-users',function(data){
 			console.log(req.user);
-			io.emit('message', {username:l3alawi,messgae:'aaaaa'});
+			io.emit('message', {username:l3alawi,messgae:'bbbb'});
 		})
 
 		socket.on('message1',function(data){
 			console.log(data);
-			io.emit('message', {username:'l3alawi',messgae:'aaaaa'});
+			io.emit('message', {username:data.username,message:data.message});
 		})
 
 		socket.on('chat message', function(msg){
@@ -208,29 +224,6 @@ var users = [];
 
 
 			
-
-		
-			/*for(var i =0; i< 10; i++){
-			gmail.users.messages.get({userId :'me', id:response.messages[i].id,auth: oauth2Client}, function(err, response){
-				console.log(response.payload.headers[16]);
-			});
-		}
-		 
-		
-
-	/*var url = oauth2Client.generateAuthUrl({
-			  access_type: 'offline', // 'online' (default) or 'offline' (gets refresh_token)
-			  scope: scopes // If you only need one scope you can pass it as string
-			});
-	console.log('----------------------------------');
-	console.log(url);
-
-
-		request(url, function(error, response, body) {
-		  console.log(body);
-		});
-*/
-
 function addMessage (body, id){
 
 	User.findById(id, function(err, user){

@@ -10,6 +10,7 @@
   <thead>
     <tr>
       <th>Message subject</th>
+      <th>State</th>
       <th>From</th>
       <th>Date</th>
     </tr>
@@ -17,6 +18,7 @@
   <tbody>
     <tr ng-repeat='message in messages track by $index'>
         <td ng-click="showAdvanced($event,$index)" ><a ng-model='message'><h4>{{message.subject}}</h4></a></td>
+        <a href="#"><td><p style="width:50%;">{{message.state}}</p></td></a>
         <a href="#"><td><p style="width:50%;">{{message.from}}</p></td></a>
         <a href="#"><td>{{message.date}}</td></a>
       </tr>

@@ -10,6 +10,9 @@ myApp.controller('AppCtrl',function($scope,$http){
 				 $scope.name = response.google.name;
 				 $scope.friends = response.google.contacts.length;
 				 $scope.friendsApp = response.user.friends.length;
+				 $scope.messageSent = response.messageSend.length;
+				  $scope.inbox = response.messageReceive.length;
+
 
 
 				
