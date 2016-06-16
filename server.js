@@ -25,6 +25,7 @@ mongoose.connect(configDB.url);
 require('./config/passport.js')(passport,request,_,fs);
 
 app.use(cookieParser());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(session({secret: 'anystringoftext',
 				 saveUninitialized: true,
@@ -43,7 +44,11 @@ app.use(express.static(path.resolve(__dirname, 'public')));
 
 
 
-require('./app/routes.js')(app, passport,request,google,GoogleContacts,_);
+require('./app/routes.js')(app, passport,request,google,GoogleContacts,_,bodyParser,fs);
+
+
+
+
 
 
 app.listen(3000, function(req, res){

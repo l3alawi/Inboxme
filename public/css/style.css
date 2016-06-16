@@ -1,14 +1,23 @@
 
 
 body{
-    
+    overflow-x: hidden;
 }
 
 table {
-        width: 100%;
-        height: 80vh;
+        table-layout: fixed; 
     }
 
+td { white-space:pre;
+display:table-cell; }
+
+.table a
+{
+    display:block;
+    text-decoration:none;
+}
+
+/*
 thead, tbody,  td, th { display: block; }
 
 tr:after {
@@ -17,6 +26,7 @@ tr:after {
     visibility: hidden;
     clear: both;
 }
+*/
 
 
 tbody {
@@ -88,6 +98,44 @@ tbody {
 
 .gridListdemoBasicUsage md-grid-tile {
   transition: all 400ms ease-out 50ms; }
+
+
+
+
+
+.button {
+    -moz-appearance: button;
+    /* Firefox */
+    -webkit-appearance: button;
+    /* Safari and Chrome */
+    padding: 10px;
+    margin: 10px;
+    width: 70px;
+}
+.drop-box {
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    height: 65px;
+    text-align: center;
+    padding-top: 25px;
+    margin: 10px;
+}
+.dragover {
+    border: 5px dashed blue;
+}
+
+
+
+body { 
+  //font-family: 'Source Sans Pro', sans-serif!important;
+  font-family: 'Roboto Slab', serif!important;
+  font-weight : 400!important;
+  
+}
+h1,h2,h3 { 
+  //font-family: 'Source Sans Pro', sans-serif!important;
+  font-family: 'Roboto Slab', serif!important;
+}
 
 
 

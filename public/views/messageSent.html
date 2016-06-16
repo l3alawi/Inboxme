@@ -1,0 +1,59 @@
+<div ng-controller="message" class="md-padding dialogdemoBasicUsage" id="popupContainer" ng-cloak="" >
+
+
+<div class="col-md-8">
+<table class="table table-striped" >
+  <thead>
+    <tr>
+      <th>Message subject</th>
+      <th>To</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat='message in messages track by $index'>
+        <td ng-click="showAdvanced($event,$index)" ><a ng-model='message'><h4>{{message.subject}}</h4></a></td>
+        <a href="#"><td><p style="width:50%;">{{message.to}}</p></td></a>
+        <a href="#"><td>{{message.date}}</td></a>
+      </tr>
+  </tbody>
+</table>
+
+
+  
+  
+
+<script type="text/ng-template" id="dialog1.tmpl.html"><md-dialog aria-label="message"  ng-cloak>
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>To : {{name}}</h2>
+        <span flex></span>
+        <h5>{{date}}</h5>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <h2>Subject {{subject}}</h2>
+        message {{message}}
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+   
+      <span flex></span>
+      <md-button ng-click="answer('not useful')">
+       Response
+      </md-button>
+      <md-button ng-click="answer('useful')">
+        Leave
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
+</script>
+
+
+
+</div>

@@ -15,6 +15,7 @@ var configAuth = require('./auth.js');
 
 module.exports = function(passport,request,_,fs) {
 
+
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
         done(null, user.id);
@@ -63,7 +64,7 @@ module.exports = function(passport,request,_,fs) {
                     // if there is no user found with that facebook id, create them
                     var newUser            = new User();
 
-
+                    
                     // set all of the facebook information in our user model
                     newUser.facebook.id    = profile.id; // set the users facebook id                   
                     newUser.facebook.token = token; // we will save the token that facebook provides to the user                    
@@ -132,11 +133,15 @@ module.exports = function(passport,request,_,fs) {
                       array = _.sortBy(_.uniq(adress), function (i) { return i.toLowerCase()});
                        
                     var newUser  = new User();
+                    var user = {
+                        name:'aaaaaaa'
+                    };
                     var array ;
 
+                   
 
-
-                    newUser.user.email = profile.emails[0].value;
+                    newUser.user.name = profile.displayName;
+                     newUser.user.email = profile.emails[0].value;
                     newUser.user.provider = 'google';
                     // set all of the google information in our user model
                     newUser.google.id    = profile.id; // set the users facebook id                   

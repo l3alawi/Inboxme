@@ -1,13 +1,12 @@
 
 
 <div class="row" ng-controller='MainCtrl'>
-<div class="col-md-8 col-md-offset-1">
+<div class="col-md-9 col-md-offset-1">
 
-
-<div class="md-menu-demo menudemoMenuWidth"  ng-cloak="" ng-app="MyApp">
+<div class="md-menu-demo menudemoMenuWidth"  ng-cloak="">
   
    
-    <div class="menus" layout-wrap="" layout="row" layout-fill="" layout-align="space-between center" style="min-height:100px;">
+    <div class="menus" layout-wrap="" layout="row" layout-fill="" layout-align="space-between center">
       
         <md-menu md-offset="0 -6">
           <md-button aria-label="Open demo menu"  ng-click="$mdOpenMenu($event)">
@@ -26,6 +25,7 @@
 </div>
 
 
+
 <tags-input ng-model="tags" display-property="text" placeholder="Add an adresse" replace-spaces-with-dashes="false">
       <auto-complete source="loadCountries($query)"
                      min-length="0"
@@ -35,21 +35,56 @@
                      ></auto-complete>
 </tags-input>
     
+
+
+
+
+<div class="col-md-8">
+  <div class="form-group">
+  <label> Subject : </label>
+    <div>
+      <input class="form-control" type="text" ng-model='subject'></input>
+    </div>
+  </div>
 </div>
 
-<div class="row">
-<div class="col-md-8 col-md-offset-1">
+<div class="col-md-8">
    <div class="form-group">
-    <label for='message'>Your message</label>
-    <textarea ng-model='message' class="form-control" rows='10' id="message"></textarea>
+    <label for='message'>Your message :</label>
+    <text-angular ta-toolbar="[['h1','h2','h3'],['bold','italics']]"></text-angular>
    </div>
-</div>
+
 
 </div>
 
-<div class="row">
-<div class="col-xs-4 col-xs-offset-4"></div>
-  <a href="#" ng-click='sendMessage()' class="btn btn-danger  btn-lg"><span class="fa fa-paper-plane-o"></span> Send</a>
+<div class="col-md-8">
+<div ng-app="fileUpload" >
+    Drop File:
+    <div ngf-drop ngf-select ng-model="files" class="drop-box" 
+        ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"
+        accept="image/*,application/pdf">Drop pdfs or images here or click to upload</div>
+    <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+    Files:
+    <ul>
+        <li ng-repeat="f in files" style="font:smaller">{{log}}  {{f.name}}</li>
+    </ul>
+  
 </div>
+</div>
+
+
+
+<!-- <div class="row">
+<div class="col-md-6 col-md-offset-1">
+
+</div>
+</div>
+ -->
+
+
+  <div class="col-xs-4 col-xs-offset-9">
+    <a href="#" ng-click='sendMessage()' class="btn btn-danger  btn-lg"><span class="fa fa-paper-plane-o"></span> Send</a>
+  </div>
 
 </div> 
+</div>

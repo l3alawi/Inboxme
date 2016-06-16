@@ -3,22 +3,25 @@ var mongoose = require('mongoose');
 var userSchema = mongoose.Schema({
 	user : { // short presentation of the schema
 		email: String,
+		name: String,
 		provider: String,
 		friends :[String]
 	},
 
-	message: { // all messages
-		receive: [{
+					// all messages
+	messageReceive: [{
 			from: String,
-			message: String
+			subject:String,
+			message: String,
+			date:String
 		}],
 
-		send: [{
+	messageSend: [{
 			to: String,
-			message:String
-		}]
-
-	},
+			subject:String,
+			message:String,
+			date:String
+		}],
 
 	facebook : { // facebook information
 		id : String,

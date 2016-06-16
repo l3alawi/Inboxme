@@ -3,7 +3,7 @@
 
 var User       = require('../app/models/user');
 
-module.exports = function(app, passport,request,google,GoogleContacts,_) {
+module.exports = function(app, passport,request,google,GoogleContacts,_,bodyParser,fs) {
 	
 	//route for home page
 
@@ -68,8 +68,49 @@ module.exports = function(app, passport,request,google,GoogleContacts,_) {
 		});
 
      app.post('/send',isloggedIn, function(req, res){
-     	console.log("ttttt");
-     	console.log(req.body);
+
+
+     	console.log(req.user);
+     	var body = req.body;
+     	User.findById(req.user, function(err, user1){
+			if(user1){
+
+				var array = [];
+				for( var i = 0; i< req.body.to.length; i++){
+					User.findOne({'user.email' : req.body.to[i]}, function(err, user){
+						console.log(user);
+                        if(user){
+                            User.update({'user.email' : user.user.email},{$push:{'messageReceive':{from: user1.user.name, subject: req.body.subject, message: req.body.message,date:req.body.date}}},{upsert:true},function(err){
+                                if(err){
+                                    console.log(err);
+                                }
+                            })
+                            
+                            
+                        } else {
+                       console.log('aaaaaa');
+							}
+				
+				})
+
+			
+		}
+
+		if(i = req.body.to.length){
+			res.json(array);
+		}
+
+		User.update({'user.email' : user1.user.email},{$push:{'messageSend':{to:body.to, subject:body.subject, message:body.message,date:body.date}}},{upsert:true},function(err){
+                                if(err){
+                                    console.log(err);
+                                }
+                            });
+	}
+		})
+     	
+
+     	
+
      })
         
 
@@ -169,6 +210,25 @@ module.exports = function(app, passport,request,google,GoogleContacts,_) {
 		  console.log(body);
 		});
 */
+
+function addMessage (body, id){
+
+	User.findById(id, function(err, user){
+			if(user){
+				User.update({'user.email' : user.user.email},{$push:{'messageSend':{to:body.to, subject:body.subject, message:body.message}}},{upsert:true},function(err){
+                                if(err){
+                                    console.log(err);
+                                }
+                            });
+
+			} else {
+				console.log(err);
+			}
+		})
+}
+
+
+
 
 	function isloggedIn(req, res, next){
 		
